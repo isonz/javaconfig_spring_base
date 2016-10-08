@@ -8,12 +8,12 @@ public class Index
 {
 	 @RequestMapping("/")
 	 public String index() {
-		 return "Index Page";
+		 return "Index Page...";
 	 }
 
     @RequestMapping("/hello")
     public String hello() {
-        return "Hello World!";
+        return "Hello World !";
     }
 	
 }
