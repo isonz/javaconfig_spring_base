@@ -18,6 +18,6 @@ public class AppStart implements EmbeddedServletContainerCustomizer
 	@Override
 	public void customize(ConfigurableEmbeddedServletContainer container) 
 	{
-		container.setPort(8082);  
+		//container.setPort(8082);  
 	}
 }
