@@ -13,11 +13,12 @@ public class AppStart implements EmbeddedServletContainerCustomizer
 	public static void main(String[] args) 
 	{
 		SpringApplication.run(AppStart.class, args);
+		//System.exit(SpringApplication.exit(SpringApplication.run(AppStart.class, args)));
 	}
 
 	@Override
 	public void customize(ConfigurableEmbeddedServletContainer container) 
 	{
-		//container.setPort(8082);  
+		container.setPort(8080);  
 	}
 }
