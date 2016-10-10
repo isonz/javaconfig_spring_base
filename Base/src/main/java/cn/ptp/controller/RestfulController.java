@@ -9,22 +9,22 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import cn.ptp.resource.GreetingResource; 
+import cn.ptp.resource.RestfulResource; 
 
 @RestController
 //@RequestMapping("/greeting")
-public class GreetingController
+public class RestfulController
 {
 	private static final String TEMPLATE = "Hello, %s!";
 
-    @RequestMapping("/greeting")
-    public HttpEntity<GreetingResource> greeting(
+    @RequestMapping("/rest")
+    public HttpEntity<RestfulResource> demo(
             @RequestParam(value = "name", required = false, defaultValue = "World") String name) {
 
-    	GreetingResource greetingResource = new GreetingResource(String.format(TEMPLATE, name));
-    	greetingResource.add(linkTo(methodOn(GreetingController.class).greeting(name)).withSelfRel());
+    	RestfulResource greetingResource = new RestfulResource(String.format(TEMPLATE, name));
+    	greetingResource.add(linkTo(methodOn(RestfulController.class).demo(name)).withSelfRel());
 
-        return new ResponseEntity<GreetingResource>(greetingResource, HttpStatus.OK);
+        return new ResponseEntity<RestfulResource>(greetingResource, HttpStatus.OK);
     }
 
 }

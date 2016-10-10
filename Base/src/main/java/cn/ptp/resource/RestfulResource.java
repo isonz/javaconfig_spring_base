@@ -5,12 +5,12 @@ import org.springframework.hateoas.ResourceSupport;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class GreetingResource extends ResourceSupport 
+public class RestfulResource extends ResourceSupport 
 {
 	private final String content;
 
     @JsonCreator
-    public GreetingResource(@JsonProperty("content") String content) {
+    public RestfulResource(@JsonProperty("content") String content) {
         this.content = content;
     }
 
