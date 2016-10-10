@@ -1,17 +1,24 @@
 package z.server;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.context.annotation.ComponentScan;
 
+//@ConfigurationProperties(locations = "classpath:application.properties")  
 @SpringBootApplication
 @ComponentScan(basePackages = "cn.ptp")
 public class AppStart implements EmbeddedServletContainerCustomizer 
 {
+	private static final Logger logger = LoggerFactory.getLogger(AppStart.class);
+	private static int port = 8080;
+	
 	public static void main(String[] args) 
 	{
+		getPort(args);
 		SpringApplication.run(AppStart.class, args);
 		//System.exit(SpringApplication.exit(SpringApplication.run(AppStart.class, args)));
 	}
@@ -19,6 +26,18 @@ public class AppStart implements EmbeddedServletContainerCustomizer
 	@Override
 	public void customize(ConfigurableEmbeddedServletContainer container) 
 	{
-		container.setPort(8080);  
+		container.setPort(port);  
 	}
+	
+	private static int getPort(String[] args) 
+	{
+		if (args.length > 0) {
+			try {
+				port = Integer.valueOf(args[0]);
+			} catch (NumberFormatException ignore) {}
+		}
+		logger.debug("server port : {}", port);
+		return port;
+	}
+	
 }
