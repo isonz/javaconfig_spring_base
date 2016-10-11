@@ -1,4 +1,4 @@
-package cn.ptp.resource;
+package test.resource;
 
 import org.springframework.hateoas.ResourceSupport;
 
