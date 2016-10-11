@@ -8,10 +8,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.Getter;
 
 import z.lib.DateUtil;
 
 @Entity
+@Getter
 @Table(name="message")
 public class Message implements Serializable
 {
