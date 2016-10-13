@@ -1,19 +1,33 @@
 package cn.ptp.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView; 
+import lombok.RequiredArgsConstructor;
 
-@RestController
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.ptp.service.MessageService;
+
+@Controller
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @RequestMapping("/message")
 public class MessageController
 {
-	private ModelAndView mv = new ModelAndView();
+	private final MessageService messageService;
+	//private ModelAndView mv = new ModelAndView();
 	
+	@ModelAttribute("messages")
 	@RequestMapping("/")
-	public ModelAndView index() {
-		mv.setViewName("index");
-        return mv;
+	public Page<?> index(@PageableDefault(size = 5) Pageable pageable) {
+		//mv.setViewName("index");
+    	//mv.addObject("name", "this is Hello! + ");  
+		// return mv;
+		return messageService.findAll(pageable);
 	}
 
 }

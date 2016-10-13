@@ -6,11 +6,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 //@ConfigurationProperties(locations = "classpath:application.properties")  
-@SpringBootApplication
-@ComponentScan(basePackages = "cn.ptp")
+@SpringBootApplication(scanBasePackages = {"cn.ptp"})
+//@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
+//@ComponentScan(basePackages = "cn.ptp")
+@EnableTransactionManagement
 public class AppStart implements EmbeddedServletContainerCustomizer 
 {
 	private static final Logger logger = LoggerFactory.getLogger(AppStart.class);
