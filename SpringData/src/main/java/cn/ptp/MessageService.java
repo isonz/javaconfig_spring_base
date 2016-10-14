@@ -18,7 +18,7 @@ import org.springframework.util.Assert;
 public class MessageService
 {
 	private final MessageRepository repository;
-	
+
 	public Optional<Message> findById(int id)
 	{
 		Assert.notNull(id, "id must not be null");
@@ -43,4 +43,5 @@ public class MessageService
 		message.setMsg(msg);
 		return repository.save(message);
 	}
+
 }

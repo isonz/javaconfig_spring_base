@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @RequiredArgsConstructor							//仅针对final系列强制初始化  
 @AllArgsConstructor(access = AccessLevel.PACKAGE)	//构造包含所有参数的构造器,可指定access级别  
 @EqualsAndHashCode(of = "id")
-//@Table(name="message")
+@Table(name="message")
 public class Message
 {
 	private @GeneratedValue @Id Long id;

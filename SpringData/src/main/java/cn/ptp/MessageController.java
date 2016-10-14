@@ -7,8 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -16,15 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MessageController
 {
 	private final MessageService messageService;
-	//private ModelAndView mv = new ModelAndView();
+	private ModelAndView mv = new ModelAndView();
 	
-	@ModelAttribute("messages")
-	@RequestMapping("/")
-	public Page<?> index(@PageableDefault(size = 5) Pageable pageable) {
-		//mv.setViewName("index");
-    	//mv.addObject("name", "this is Hello! + ");  
-		// return mv;
-		return messageService.findAll(pageable);
+	@RequestMapping("/paged")
+	public ModelAndView paged(@PageableDefault(size = 5) Pageable pageable) {
+		mv.setViewName("paged");
+		mv.addObject("lists",  messageService.findAll(pageable));
+		return mv;
 	}
 
+    @RequestMapping("/")
+    public ModelAndView index() {
+        mv.setViewName("index");
+        return mv;
+    }
 }
