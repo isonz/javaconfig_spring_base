@@ -28,6 +28,7 @@ public class MessageController
     @RequestMapping("/")
     public ModelAndView index() {
         mv.setViewName("index");
+		mv.addObject("name", "ison.zhang");
         return mv;
     }
 }
