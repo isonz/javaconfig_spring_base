@@ -13,7 +13,7 @@ public class IndexController
     @RequestMapping("/")
     public ModelAndView index() {
         mv.setViewName("index");
-		mv.addObject("name", "ison.zhanf");
+		mv.addObject("name", "ison.zzzz");
         return mv;
     }
 }

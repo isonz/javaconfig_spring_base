@@ -7,11 +7,11 @@ import org.springframework.context.ApplicationContext;
 import java.util.Arrays;
 
 @SpringBootApplication
-public class InitApplication {
+public class AppStart {
 
 	public static void main(String[] args)
 	{
-		ApplicationContext ctx = SpringApplication.run(InitApplication.class, args);
+		ApplicationContext ctx = SpringApplication.run(AppStart.class, args);
 		System.out.println("Spring 注入的 Beans :");
 		String[] beanNames = ctx.getBeanDefinitionNames();
 		Arrays.sort(beanNames);
