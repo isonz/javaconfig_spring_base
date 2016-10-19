@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContext;
 
 import java.util.Arrays;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "cn.ptp.*")
 public class AppStart {
 
 	public static void main(String[] args)

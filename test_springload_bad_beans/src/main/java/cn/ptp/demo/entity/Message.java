@@ -1,4 +1,4 @@
-package cn.ptp;
+package cn.ptp.demo.entity;
 
 import java.util.Date;
 

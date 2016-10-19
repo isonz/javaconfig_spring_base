@@ -1,8 +1,11 @@
-package cn.ptp;
+package cn.ptp.demo.service;
 
 import java.util.Optional;
 
 import javax.transaction.Transactional;
+
+import cn.ptp.demo.entity.Message;
+import cn.ptp.demo.repository.MessageRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
