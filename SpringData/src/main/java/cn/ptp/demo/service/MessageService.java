@@ -1,9 +1,11 @@
-package cn.ptp.service;
+package cn.ptp.demo.service;
 
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import cn.ptp.demo.entity.Message;
+import cn.ptp.demo.repository.MessageRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,28 +14,25 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import cn.ptp.entity.Message;
-import cn.ptp.repository.MessageRepository;
-
 @Transactional
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))	
 public class MessageService
 {
 	private final MessageRepository repository;
-	
+
 	public Optional<Message> findById(int id)
 	{
 		Assert.notNull(id, "id must not be null");
 		return repository.findById(id);
 	}
 	
-	public Page<Message> paged(Pageable pageable)
+	public Page<Message> findAll(Pageable pageable)
 	{
 		Assert.notNull(pageable, "Pageable must not be null!");
 		return repository.findAll(pageable);
 	}
-	
+
 	public Iterable<Message> findAll()
 	{
 		return repository.findAll();
@@ -51,4 +50,5 @@ public class MessageService
 		message.setMsg(msg);
 		return repository.save(message);
 	}
+
 }

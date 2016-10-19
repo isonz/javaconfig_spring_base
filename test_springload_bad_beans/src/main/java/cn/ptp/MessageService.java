@@ -3,7 +3,6 @@ package cn.ptp;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
-
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +28,11 @@ public class MessageService
 	{
 		Assert.notNull(pageable, "Pageable must not be null!");
 		return repository.findAll(pageable);
+	}
+
+	public Iterable<Message> findAll()
+	{
+		return repository.findAll();
 	}
 	
 	public Message add(Message message, String name, String msg) {

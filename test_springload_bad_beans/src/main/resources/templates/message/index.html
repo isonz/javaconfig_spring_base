@@ -1,5 +1,7 @@
 <#include "header.html">
 
-Hello ${name} ...
+<#list items as item>
+    ${item.name}
+</#list>
 
 <#include "footer.html">

@@ -2,7 +2,6 @@ package cn.ptp;
 
 import java.util.Optional;
 
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface MessageRepository extends PagingAndSortingRepository<Message, Long>
