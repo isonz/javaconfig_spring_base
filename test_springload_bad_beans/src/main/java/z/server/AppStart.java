@@ -1,4 +1,4 @@
-package cn.ptp;
+package z.server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

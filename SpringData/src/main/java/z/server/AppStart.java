@@ -3,17 +3,13 @@ package z.server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 
-@EnableAutoConfiguration  
-//@ConfigurationProperties(locations = "classpath:application.properties")  
-@SpringBootApplication(scanBasePackages = {"cn.ptp"})
+@SpringBootApplication(scanBasePackages = {"cn.ptp.*"})
 //@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
-//@ComponentScan(basePackages = "cn.ptp")
-public class AppStart implements EmbeddedServletContainerCustomizer 
+public class AppStart implements EmbeddedServletContainerCustomizer
 {
 	private static final Logger logger = LoggerFactory.getLogger(AppStart.class);
 	private static int port = 8080;
