@@ -1,0 +1,133 @@
+spring boot允许你自定义一个application.properties文件，然后放在以下的地方，来重写spring boot的环境变量或者定义你自己环境变量
+
+1、当前目录的 /config 的子目录下
+2、当前目录下
+3、classpath根目录的 /config 包下
+4、classpath的根目录下
+
+如果同时在四个地方都有配置文件，配置文件的优先级是从1到4。
+
+
+使用配置文件之后，spring boo启动时，会自动把配置信息读取到spring容器中，并覆盖spring boot的默认配置，那么，我们怎么来读取和设置这些配置信息呢
+
+
+1.通过命令行来重写和配置环境变量，优先级最高，例如可以通过下面的命令来重写spring boot 内嵌tomcat的服务端口，注意“=”俩边不要有空格
+
+java -jar demo.jar --server.port=9000
+
+
+如果想要设置多个变量怎么办，可以已json的格式字符串来设置
+
+java -jar demo.jar --spring.application.json='{"foo":"bar"}'
+
+
+2.通过@value注解来读取
+
+@RestController
+@RequestMapping("/task")
+public class TaskController {
+
+@Value("${connection.remoteAddress}") private String address;
+
+@RequestMapping(value = {"/",""})
+public String hellTask(@Value("${connection.username}")String name){
+
+    return "hello task !!";
+}
+
+}
+
+
+
+3.通过Environment接口来获取，只需要把接口注进去即可
+
+@RestController
+@RequestMapping("/task")
+public class TaskController {
+
+@Autowired Environment ev ;
+
+@Value("${connection.remoteAddress}") private String address;
+
+@RequestMapping(value = {"/",""})
+public String hellTask(@Value("${connection.username}")String name){
+
+    String password = ev.getProperty("connection.password");
+    return "hello task !!";
+}
+
+}
+
+
+
+
+4.可以自定义一个工具类，来获取，这种方式关键在于读取配置文件信息，适合自定义的配置信息，spring 容器默认的配置信息会读不到
+
+@Component
+public class SystemConfig {
+
+    private static Properties props ;
+
+    public SystemConfig(){
+
+        try {
+            Resource resource = new ClassPathResource("/application.properties");//
+            props = PropertiesLoaderUtils.loadProperties(resource);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 获取属性
+     * @param key
+     * @return
+     */
+    public static String getProperty(String key){
+
+        return props == null ? null :  props.getProperty(key);
+
+    }
+
+    /**
+     * 获取属性
+     * @param key 属性key
+     * @param defaultValue 属性value
+     * @return
+     */
+    public static String getProperty(String key,String defaultValue){
+
+         return props == null ? null : props.getProperty(key, defaultValue);
+
+    }
+
+    /**
+     * 获取properyies属性
+     * @return
+     */
+    public static Properties getProperties(){
+        return props;
+    }
+
+}
+//用的话，就直接这样子
+String value = SystemConfig.getProperty("key");
+
+
+
+
+
+5.可以利用${…}在application.properties引用变量
+myapp.name=spring
+myapp.desc=${myapp.name} nice
+
+
+6.可以在application.properties配置随机变量,利用的是RandomValuePropertySource类
+my.secret=${random.value}
+my.number=${random.int}
+my.bignumber=${random.long}
+my.number.less.than.ten=${random.int(10)}
+my.number.in.range=${random.int[1024,65536]}
+
+简单的配置文件的使用就先写到这里，再看看其他高级用法，如Profiles还有@ConfigurationProperties
