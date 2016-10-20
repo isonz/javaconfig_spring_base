@@ -22,7 +22,7 @@ import javax.persistence.Table;
 @Table(name="message")
 public class Message
 {
-	private @GeneratedValue @Id Long id;
+	@Getter private @GeneratedValue @Id Long id;
 	@Getter @Setter private String name;
 	@Getter @Setter private String msg;
 	@Getter @Setter private int create_at;

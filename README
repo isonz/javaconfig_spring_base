@@ -1,3 +1,7 @@
+正确停止启动可参考： http://www.cnblogs.com/lobo/p/5657684.html
+
+
+
 spring boot允许你自定义一个application.properties文件，然后放在以下的地方，来重写spring boot的环境变量或者定义你自己环境变量
 
 1、当前目录的 /config 的子目录下
