@@ -22,8 +22,8 @@ import javax.persistence.Table;
 @Table(name="message")
 public class Message
 {
-	@Getter private @GeneratedValue @Id Long id;
-	@Getter @Setter private String name;
+	@Getter @Setter private @GeneratedValue @Id Long id;
+	@Getter private String name;
 	@Getter @Setter private String msg;
 	@Getter @Setter private int create_at;
 	@Getter @Setter private String update_at;
@@ -31,4 +31,8 @@ public class Message
 	@Getter @Setter private float days;
 	@Getter @Setter private String ip;
 
+	public void setName(String name) {
+		if(name.length() > 20) name = name.substring(0,20);
+		this.name = name;
+	}
 }

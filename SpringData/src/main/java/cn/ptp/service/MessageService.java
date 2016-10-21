@@ -21,10 +21,10 @@ public class MessageService
 {
 	private final MessageRepository repository;
 
-	public Optional<Message> findById(int id)
+	public Message findOne(long id)
 	{
 		Assert.notNull(id, "id must not be null");
-		return repository.findById(id);
+		return repository.findOne(id);
 	}
 	
 	public Page<Message> findAll(Pageable pageable)
@@ -38,17 +38,27 @@ public class MessageService
 		return repository.findAll();
 	}
 	
-	public Message add(Message message, String name, String msg) {
+	public Message save(Message message){
 
-		Assert.notNull(name, "Username must not be null!");
-		Assert.notNull(msg, "Password must not be null!");
+		Assert.notNull(message.getName(), "Username must not be null!");
+		Assert.notNull(message.getMsg(), "Password must not be null!");
 
-		repository.findByName(name).ifPresent(mesg -> {
-			throw new IllegalArgumentException("User with that name already exists!");
+		repository.findByName(message.getName()).ifPresent(mesg -> {
+			System.out.println(mesg.getName());
+			//throw new IllegalArgumentException("User with that name already exists!");
 		});
-		message.setName(name);
-		message.setMsg(msg);
 		return repository.save(message);
+	}
+
+	public boolean delete(long id)
+	{
+		if(!repository.findById(id).isPresent()){
+			//throw new IllegalArgumentException("ID: "+id+" is not exists!");
+			return false;
+		}
+		repository.delete(id);
+		if(!repository.findById(id).isPresent()) return true;
+		return false;
 	}
 
 }

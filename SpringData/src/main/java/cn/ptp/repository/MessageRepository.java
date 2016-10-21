@@ -7,7 +7,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface MessageRepository extends PagingAndSortingRepository<Message, Long>
 {
-	Optional<Message> findById(int id);
+	Optional<Message> findById(long id);
 	
 	//@Query("select c from message c where c.name = ?1")
 	Optional<Message> findByName(String name);

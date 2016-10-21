@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>cn.ptp</groupId>
-	<artifactId>Test</artifactId>
+	<artifactId>SpringData</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>Test</name>
+	<name>SpringData</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
@@ -75,13 +75,18 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
-		<!-- Compiler End -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.8</version>
+        </dependency>
+        <!-- Compiler End -->
 
 
 	</dependencies>
 
 	<build>
-		<finalName>Test</finalName>
+		<finalName>SpringData</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
