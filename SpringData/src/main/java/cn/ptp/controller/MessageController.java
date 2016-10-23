@@ -90,7 +90,7 @@ public class MessageController
     )
     {
         message = service.findOne(id);	    //防止没更新的字段变空
-        message.setId(id);
+        //message.setId(id);
         message.setName(name);
         message.setMsg(msg);
 

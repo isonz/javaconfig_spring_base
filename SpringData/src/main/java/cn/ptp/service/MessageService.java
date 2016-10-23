@@ -45,9 +45,10 @@ public class MessageService
 
 		repository.findByName(message.getName()).ifPresent(mesg -> {
 			System.out.println(mesg.getName());
-			//throw new IllegalArgumentException("User with that name already exists!");
+			throw new IllegalArgumentException("Name 重复!");
 		});
-		return repository.save(message);
+		return message;
+		//return repository.save(message);
 	}
 
 	public boolean delete(long id)
