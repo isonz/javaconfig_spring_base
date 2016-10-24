@@ -26,7 +26,7 @@ public class MessageService
 		Assert.notNull(id, "id must not be null");
 		return repository.findOne(id);
 	}
-	
+
 	public Page<Message> findAll(Pageable pageable)
 	{
 		Assert.notNull(pageable, "Pageable must not be null!");
@@ -37,18 +37,27 @@ public class MessageService
 	{
 		return repository.findAll();
 	}
-	
-	public Message save(Message message){
 
-		Assert.notNull(message.getName(), "Username must not be null!");
-		Assert.notNull(message.getMsg(), "Password must not be null!");
+	public Message save(Message message)
+    {
+		Assert.hasText(message.getMsg(), "Mst must not be empty!");
 
-		repository.findByName(message.getName()).ifPresent(mesg -> {
-			System.out.println(mesg.getName());
-			throw new IllegalArgumentException("Name 重复!");
+		findByName(message.getName()).ifPresent(mesg -> {
+			if(!mesg.equals(message)){
+				throw new IllegalArgumentException("Name 重复!");
+			}
 		});
-		return message;
-		//return repository.save(message);
+		Message tmp = findOne(message.getId());	    //防止没更新的字段变空
+
+		tmp.setName(message.getName());
+		tmp.setMsg(message.getMsg());
+        return repository.save(tmp);
+	}
+
+	public Optional findByName(String name)
+	{
+		Assert.hasText(name, "Name must not be empty!");
+		return repository.findByName(name);
 	}
 
 	public boolean delete(long id)

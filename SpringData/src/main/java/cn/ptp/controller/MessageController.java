@@ -89,11 +89,6 @@ public class MessageController
             Message message
     )
     {
-        message = service.findOne(id);	    //防止没更新的字段变空
-        //message.setId(id);
-        message.setName(name);
-        message.setMsg(msg);
-
         service.save(message);
         return "redirect:/message/";
     }

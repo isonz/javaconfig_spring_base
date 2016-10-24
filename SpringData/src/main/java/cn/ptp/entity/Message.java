@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.AllArgsConstructor;
 import lombok.AccessLevel;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,6 +22,8 @@ import javax.persistence.Table;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)	//构造包含所有参数的构造器,可指定access级别  
 @EqualsAndHashCode(of = "id")
 @Table(name="message")
+@DynamicUpdate
+@DynamicInsert
 public class Message
 {
 	@Getter @Setter private @GeneratedValue @Id Long id;
