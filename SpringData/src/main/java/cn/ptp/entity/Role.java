@@ -35,7 +35,7 @@ public class Role
 	private String code;
 
 	@Getter @Setter
-	@ManyToMany(mappedBy = "role")
-	private List<User> user = new ArrayList<User>();
+	@ManyToMany(targetEntity = User.class, mappedBy = "roles")
+	private List<User> users = new ArrayList<User>();
 
 }

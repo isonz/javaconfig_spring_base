@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
-Source Server Version : 50709
+Source Server Version : 50524
 Source Host           : localhost:3306
 Source Database       : myssh
 
 Target Server Type    : MYSQL
-Target Server Version : 50709
+Target Server Version : 50524
 File Encoding         : 65001
 
-Date: 2016-10-25 18:15:49
+Date: 2016-10-26 00:05:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -48,7 +48,7 @@ CREATE TABLE `message` (
   `ip` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of message
@@ -57,9 +57,8 @@ INSERT INTO `message` VALUES ('37', '1472724499', '2016-09-01', '100.01', '发�
 INSERT INTO `message` VALUES ('84', '1482726919', '2016-09-01', '100.01', 'asdf', 'ytybbbbbbbbbbfffffff', '2016-09-01 18:48:39', '192.168.75.112');
 INSERT INTO `message` VALUES ('90', '0', null, '0.00', '杭州起码科技有限公司杭州起码科技有限公司', '杭州起码科技有限公司', null, null);
 INSERT INTO `message` VALUES ('91', '0', null, '0.00', 'uuuuurrrrffff', '杭州起码fff', null, null);
-INSERT INTO `message` VALUES ('92', '0', null, '0.00', 'fasdfsadfifff', 'uuuuu让人啊啊啊', null, null);
-INSERT INTO `message` VALUES ('93', '0', null, '0.00', 'fffffffff', 'fffffffffff', '2016-10-25 17:49:40', null);
-INSERT INTO `message` VALUES ('94', '0', null, '0.00', 'asdf', 'ytybb', '2016-10-25 18:07:21', null);
+INSERT INTO `message` VALUES ('92', '0', null, '0.00', 'ff', 'uuuuu让人啊啊啊', null, null);
+INSERT INTO `message` VALUES ('95', '0', null, '0.00', 'fffffffffffffffff', 'サンヤ (三亜)を体験しよう!', '2016-10-25 22:55:13', null);
 
 -- ----------------------------
 -- Table structure for role
@@ -91,7 +90,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   KEY `FK5rwmryny6jthaaxkogownknqp` (`dept_id`),
   CONSTRAINT `FK5rwmryny6jthaaxkogownknqp` FOREIGN KEY (`dept_id`) REFERENCES `dept` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
@@ -109,12 +108,12 @@ INSERT INTO `user` VALUES ('7', 'katie', '什么？不可以？', 'katie', '', 
 -- ----------------------------
 DROP TABLE IF EXISTS `user_role`;
 CREATE TABLE `user_role` (
-  `user_id` int(10) unsigned NOT NULL,
-  `role_id` int(10) unsigned NOT NULL,
-  KEY `FKeog8p06nu33ihk13roqnrp1y6` (`role_id`),
-  KEY `FKip2yfnw7nx55paaa4i18j7moj` (`user_id`),
-  CONSTRAINT `FKeog8p06nu33ihk13roqnrp1y6` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
-  CONSTRAINT `FKip2yfnw7nx55paaa4i18j7moj` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+  `users_id` int(10) unsigned NOT NULL,
+  `roles_id` int(10) unsigned NOT NULL,
+  KEY `FKeog8p06nu33ihk13roqnrp1y6` (`roles_id`),
+  KEY `FKip2yfnw7nx55paaa4i18j7moj` (`users_id`),
+  CONSTRAINT `FKip2yfnw7nx55paaa4i18j7moj` FOREIGN KEY (`users_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `FKeog8p06nu33ihk13roqnrp1y6` FOREIGN KEY (`roles_id`) REFERENCES `role` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------

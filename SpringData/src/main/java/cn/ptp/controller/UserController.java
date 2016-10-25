@@ -58,7 +58,7 @@ public class UserController
             info.put("openid", item.getOpenid());
             info.put("username", item.getUsername());
             info.put("userid", item.getUserid());
-            info.put("roles", item.getRole());
+            info.put("roles", item.getRoles());
             info.put("dept", item.getDepartment());
             if(0==i){
                 json = JSON.toJSONString(info);
