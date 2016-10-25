@@ -34,9 +34,9 @@ table{margin:20px auto;}
 #msglist td img{height:50px;}
 #msgadd td.left{text-align:left;}
 
-#name, #msg, #button{border-radius: 5px;  border:1px solid #eee;}
-#name{height:25px;}
-#name, #msg{width:50%; padding:5px;}
+#name, #msg, #button, .input{border-radius: 5px;  border:1px solid #eee;}
+#name,.input{height:25px;}
+#name, #msg,.input{width:50%; padding:5px;}
 #button{width:30%; background:#eee; padding:10px;font-weight:bolder; font-size:16px;}
 #button:hover{background:#e6e6e6;}
 

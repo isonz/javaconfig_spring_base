@@ -1,0 +1,45 @@
+<#include "header.html">
+
+    <div id="content">
+        <table id="msglist" width="90%" cellspacing="1" bgcolor="#eee">
+            <#assign k=1 />
+            <#list items as item>
+                <tr>
+                    <td class="listnum" width="5%">${item.id}</td>
+                    <td width="10%"><img src="/images/${k}.gif" /></td>
+                    <td width="15%"><a href="/user/sql?name=${item.openid}">${item.openid}</a></td>
+                    <td><a href="/user/sql?name=${item.username}">${item.username}</a></td>
+                    <td width="10%">${item.userid}</td>
+                    <td width="10%">${item.valid}</td>
+                    <td width="10%">${item.department.name}</td>
+                    <td width="10%"></td>
+                    <td width="5%"><a href="/user/edit/${item.id}">修改</a></td>
+                    <td width="5%"><a href="/user/delete/${item.id}">删除</a></td>
+                </tr>
+                <#if (k>1)> <#assign k=1 /> <#else> <#assign k=k+1 /> </#if>
+            </#list>
+            <tr><td colspan="11">总记录数：${total}，总页数：${allpage}</td></tr>
+        </table>
+
+        <form id="form1" name="form1" method="post" action="/user/add">
+            <table id="msgadd" width="90%" cellspacing="1" bgcolor="#eee">
+                <tr>
+                    <td width="30%">Open Id</td>
+                    <td class="left"><input class="input" type="text" name="openid" id="openid" /></td>
+                </tr>
+                <tr>
+                    <td>用户名称</td>
+                    <td class="left"><input class="input" type="text" name="username" id="username" /></td>
+                </tr>
+                <tr>
+                    <td>用户 ID</td>
+                    <td class="left"><input class="input" type="text" name="userid" id="userid" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" name="button" id="button" value="提 交" /></td>
+                </tr>
+            </table>
+        </form>
+
+    </div>
+<#include "footer.html">

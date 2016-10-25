@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.expression.ExpressionException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -27,10 +28,17 @@ public class MessageService
 		return repository.findOne(id);
 	}
 
+	public int count()
+	{
+		return (int)repository.count();
+	}
+
 	public Page<Message> paged(Pageable pageable)
 	{
 		Assert.notNull(pageable, "Pageable must not be null!");
-		return repository.findAll(pageable);
+		Page<Message> page = repository.findAll(pageable);
+		//for (Message p : page){	System.out.println(p.getName());}
+		return page;
 	}
 
 	public Iterable<Message> findAll()
@@ -47,10 +55,16 @@ public class MessageService
 				throw new IllegalArgumentException("Name 重复!");
 			}
 		});
-		Message tmp = findOne(message.getId());	    //防止没更新的字段变空
 
-		tmp.setName(message.getName());
-		tmp.setMsg(message.getMsg());
+		Message tmp;
+		try {
+			long id = message.getId();
+			tmp = findOne(id);	    //防止没更新的字段变空
+			tmp.setName(message.getName());
+			tmp.setMsg(message.getMsg());
+		}catch (NullPointerException e){
+			tmp = message;
+		}
         return repository.save(tmp);
 	}
 
@@ -71,6 +85,9 @@ public class MessageService
 		return false;
 	}
 
-
+	public Message sql(Message message)
+	{
+		return repository.findName(message.getName());
+	}
 
 }
