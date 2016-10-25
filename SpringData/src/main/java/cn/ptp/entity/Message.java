@@ -39,4 +39,5 @@ public class Message
 		if(name.length() > 20) name = name.substring(0,20);
 		this.name = name;
 	}
+
 }

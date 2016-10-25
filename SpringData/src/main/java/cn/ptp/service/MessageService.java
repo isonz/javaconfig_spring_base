@@ -27,7 +27,7 @@ public class MessageService
 		return repository.findOne(id);
 	}
 
-	public Page<Message> findAll(Pageable pageable)
+	public Page<Message> paged(Pageable pageable)
 	{
 		Assert.notNull(pageable, "Pageable must not be null!");
 		return repository.findAll(pageable);
@@ -70,5 +70,7 @@ public class MessageService
 		if(!repository.findById(id).isPresent()) return true;
 		return false;
 	}
+
+
 
 }

@@ -4,6 +4,7 @@ import cn.ptp.entity.Message;
 import cn.ptp.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +27,11 @@ public class MessageController
     }
 
     @RequestMapping(value = "/paged", method = RequestMethod.GET)
-    public void paged(@RequestParam(value="pageNum", defaultValue="1") int pageNum, @RequestParam(value="pageSize", defaultValue="20") int count){
-
+    public String paged(@RequestParam(value="pageNum", defaultValue="1") int pageNum, @RequestParam(value="pageSize", defaultValue="20") int count, Model model)
+    {
+        int start = (pageNum - 1) * count;
+        model.addAttribute("items", service.paged(new PageRequest(start, count)));
+        return "message/paged";
     }
 
     @RequestMapping(value = "/json", produces="application/json;charset=utf-8", method = RequestMethod.GET)
