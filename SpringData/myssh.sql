@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
-Source Server Version : 50524
+Source Server Version : 50709
 Source Host           : localhost:3306
 Source Database       : myssh
 
 Target Server Type    : MYSQL
-Target Server Version : 50524
+Target Server Version : 50709
 File Encoding         : 65001
 
-Date: 2016-10-26 00:05:43
+Date: 2016-10-26 18:33:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,12 +26,16 @@ CREATE TABLE `dept` (
   PRIMARY KEY (`id`),
   KEY `FKpo40eieof9vp6499qcs7ep9et` (`parent_id`),
   CONSTRAINT `FKpo40eieof9vp6499qcs7ep9et` FOREIGN KEY (`parent_id`) REFERENCES `dept` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dept
 -- ----------------------------
 INSERT INTO `dept` VALUES ('1', '电商部', null);
+INSERT INTO `dept` VALUES ('2', '市场部', null);
+INSERT INTO `dept` VALUES ('3', '服务部', null);
+INSERT INTO `dept` VALUES ('4', '品牌部', null);
+INSERT INTO `dept` VALUES ('5', '总经办', null);
 
 -- ----------------------------
 -- Table structure for message
@@ -69,12 +73,14 @@ CREATE TABLE `role` (
   `code` varchar(20) DEFAULT NULL COMMENT '角色代码',
   `name` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of role
 -- ----------------------------
 INSERT INTO `role` VALUES ('1', 'dept_manger', '部门经理');
+INSERT INTO `role` VALUES ('2', 'zongjingli', '总经理');
+INSERT INTO `role` VALUES ('3', 'dongshizhang', '董事长');
 
 -- ----------------------------
 -- Table structure for user
@@ -90,18 +96,22 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   KEY `FK5rwmryny6jthaaxkogownknqp` (`dept_id`),
   CONSTRAINT `FK5rwmryny6jthaaxkogownknqp` FOREIGN KEY (`dept_id`) REFERENCES `dept` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES ('1', 'openid_ison', 'username_ison', 'userid_ison', '', '1');
-INSERT INTO `user` VALUES ('2', 'katie', '13632252275', 'katie', '', null);
-INSERT INTO `user` VALUES ('3', '张三丰', '张三丰', '张无忌', '', null);
-INSERT INTO `user` VALUES ('4', '张三丰', '张三丰不能重复', '张无忌', '', null);
-INSERT INTO `user` VALUES ('5', '张三丰', '张三丰还是不能重复', '张无忌', '', null);
-INSERT INTO `user` VALUES ('6', 'katie', '也是不能重复', 'katie', '', null);
-INSERT INTO `user` VALUES ('7', 'katie', '什么？不可以？', 'katie', '', null);
+INSERT INTO `user` VALUES ('2', 'katie', '13632252275', 'katie', '', '1');
+INSERT INTO `user` VALUES ('3', '张三丰', '张三丰', '张无忌', '', '1');
+INSERT INTO `user` VALUES ('4', '张三丰', '张三丰不能重复', '张无忌', '', '3');
+INSERT INTO `user` VALUES ('5', '张三丰', '张三丰还是不能重复', '张无忌', '', '4');
+INSERT INTO `user` VALUES ('6', 'katie', '也是不能重复', 'katie', '', '2');
+INSERT INTO `user` VALUES ('7', 'katie', '什么？不可以？', 'katie顶顶顶顶顶', '', '3');
+INSERT INTO `user` VALUES ('12', 'misswu', 'misswu', 'misswu', '', '5');
+INSERT INTO `user` VALUES ('14', '张三丰', 'zxskigg', 'ison', '', '1');
+INSERT INTO `user` VALUES ('16', '张三丰', 'isonz@qq.com', '张无忌', '', '3');
+INSERT INTO `user` VALUES ('17', '是吗', '阿山的发生', '撒旦发', '', '2');
 
 -- ----------------------------
 -- Table structure for user_role
@@ -112,11 +122,42 @@ CREATE TABLE `user_role` (
   `roles_id` int(10) unsigned NOT NULL,
   KEY `FKeog8p06nu33ihk13roqnrp1y6` (`roles_id`),
   KEY `FKip2yfnw7nx55paaa4i18j7moj` (`users_id`),
-  CONSTRAINT `FKip2yfnw7nx55paaa4i18j7moj` FOREIGN KEY (`users_id`) REFERENCES `user` (`id`),
-  CONSTRAINT `FKeog8p06nu33ihk13roqnrp1y6` FOREIGN KEY (`roles_id`) REFERENCES `role` (`id`)
+  CONSTRAINT `FKeog8p06nu33ihk13roqnrp1y6` FOREIGN KEY (`roles_id`) REFERENCES `role` (`id`),
+  CONSTRAINT `FKip2yfnw7nx55paaa4i18j7moj` FOREIGN KEY (`users_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_role
 -- ----------------------------
-INSERT INTO `user_role` VALUES ('1', '1');
+INSERT INTO `user_role` VALUES ('1', '2');
+INSERT INTO `user_role` VALUES ('12', '3');
+INSERT INTO `user_role` VALUES ('14', '1');
+INSERT INTO `user_role` VALUES ('7', '2');
+INSERT INTO `user_role` VALUES ('7', '3');
+INSERT INTO `user_role` VALUES ('16', '1');
+INSERT INTO `user_role` VALUES ('16', '3');
+INSERT INTO `user_role` VALUES ('4', '2');
+INSERT INTO `user_role` VALUES ('5', '1');
+INSERT INTO `user_role` VALUES ('5', '2');
+INSERT INTO `user_role` VALUES ('6', '2');
+INSERT INTO `user_role` VALUES ('3', '1');
+INSERT INTO `user_role` VALUES ('2', '2');
+INSERT INTO `user_role` VALUES ('17', '1');
+
+-- ----------------------------
+-- Table structure for user_roles1
+-- ----------------------------
+DROP TABLE IF EXISTS `user_roles1`;
+CREATE TABLE `user_roles1` (
+  `users1_id` int(10) unsigned NOT NULL,
+  `roles1_id` int(10) unsigned NOT NULL,
+  KEY `FKeog8p06nu33ihk13roqnrp1y6` (`roles1_id`),
+  KEY `FKip2yfnw7nx55paaa4i18j7moj` (`users1_id`),
+  CONSTRAINT `user_roles1_ibfk_1` FOREIGN KEY (`roles1_id`) REFERENCES `role` (`id`),
+  CONSTRAINT `user_roles1_ibfk_2` FOREIGN KEY (`users1_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of user_roles1
+-- ----------------------------
+INSERT INTO `user_roles1` VALUES ('1', '1');

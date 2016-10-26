@@ -12,7 +12,11 @@
                     <td width="10%">${item.userid}</td>
                     <td width="10%">${item.valid}</td>
                     <td width="10%">${item.department.name}</td>
-                    <td width="10%"></td>
+                    <td width="10%">
+                        <#list item.roles as role>
+                            ${(role.name)!}<br>
+                        </#list>
+                    </td>
                     <td width="5%"><a href="/user/edit/${item.id}">修改</a></td>
                     <td width="5%"><a href="/user/delete/${item.id}">删除</a></td>
                 </tr>
@@ -34,6 +38,24 @@
                 <tr>
                     <td>用户 ID</td>
                     <td class="left"><input class="input" type="text" name="userid" id="userid" /></td>
+                </tr>
+                <tr>
+                    <td>部门</td>
+                    <td class="left">
+                        <select class="input select" name="department" id="department">
+                            <#list depts as dept>
+                                <option value="${dept.id}">${dept.name}</option>
+                            </#list>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>角色</td>
+                    <td class="left checkbox">
+                        <#list roles as role>
+                            <input type="checkbox" class="checkbox" name="roles" id="roles" value="${role.id}" />${role.name}&nbsp;&nbsp;&nbsp;&nbsp;
+                        </#list>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="2"><input type="submit" name="button" id="button" value="提 交" /></td>

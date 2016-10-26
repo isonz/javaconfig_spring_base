@@ -1,6 +1,10 @@
 package cn.ptp.service;
 
+import cn.ptp.entity.Department;
+import cn.ptp.entity.Role;
 import cn.ptp.entity.User;
+import cn.ptp.repository.DepartmentRepository;
+import cn.ptp.repository.RoleRepository;
 import cn.ptp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 @Transactional
 @Service
@@ -17,6 +25,8 @@ import javax.transaction.Transactional;
 public class UserService
 {
 	private final UserRepository repository;
+	private final RoleRepository roleRepository;
+	private final DepartmentRepository departmentRepository;
 
 	public User findOne(long id)
 	{
@@ -39,7 +49,16 @@ public class UserService
 
 	public Iterable<User> findAll()
 	{
-		return repository.findAll();
+		/*
+		User user = repository.findOne((long) 1);
+		Set<Role> roles = user.getRoles();
+		Iterator<Role> it = roles.iterator();
+		while (it.hasNext()) {
+			System.out.println(it.next().getName());
+		}
+		*/
+		//return repository.findAll();
+		return repository.findAllByOrderByIdDesc();
 	}
 
 	public User save(User user)
@@ -55,6 +74,8 @@ public class UserService
 			tmp.setOpenid(user.getOpenid());
 			tmp.setUsername(user.getUsername());
 			tmp.setUserid(user.getUserid());
+			tmp.setDepartment(user.getDepartment());
+			tmp.setRoles(user.getRoles());
 		}catch (NullPointerException e){
 			tmp = user;
 		}
@@ -72,9 +93,20 @@ public class UserService
 		return false;
 	}
 
-	public User sql(User user)
+	public Iterable<User> findAllSql()
 	{
-		return user;
+		return repository.findAllSql();
 	}
+
+	public Iterable<Department> findAllDept()
+	{
+		return departmentRepository.findAll();
+	}
+
+	public Iterable<Role> findAllRole()
+	{
+		return roleRepository.findAll();
+	}
+
 
 }

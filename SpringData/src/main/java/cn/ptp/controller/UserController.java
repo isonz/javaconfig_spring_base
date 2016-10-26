@@ -1,5 +1,6 @@
 package cn.ptp.controller;
 
+import cn.ptp.entity.Department;
 import cn.ptp.entity.User;
 import cn.ptp.service.UserService;
 import com.alibaba.fastjson.JSON;
@@ -23,58 +24,37 @@ public class UserController
     private final UserService service;
 
     @RequestMapping("/")
-    public String index(Model model) {
-        model.addAttribute("items", service.findAll());	//addAttribute不允许空值
+    public String index(Model model)
+    {
+        model.addAttribute("items", service.findAll());
+        model.addAttribute("depts", service.findAllDept());
+        model.addAttribute("roles", service.findAllRole());
+
         return "user/index";
     }
 
     @RequestMapping(value = "/paged", method = RequestMethod.GET)
     public String paged(@RequestParam(value="pageNum", defaultValue="1") int pageNum, @RequestParam(value="pageSize", defaultValue="20") int count, Model model)
     {
-
         int start = (pageNum - 1) * count;
         Page<User> page = service.paged(new PageRequest(start, count));
         long total = page.getTotalElements();
         int allpage = page.getTotalPages();
         Iterator<User> items = page.iterator();
+
         model.addAttribute("items", items);
         model.addAttribute("total", total);
         model.addAttribute("allpage", allpage);
 
-        return "user/paged";
-    }
+        model.addAttribute("depts", service.findAllDept());
+        model.addAttribute("roles", service.findAllRole());
 
-    @RequestMapping(value = "/json", produces="application/json;charset=utf-8", method = RequestMethod.GET)
-    @ResponseBody
-    public String json()
-    {
-        Iterable<User> items = service.findAll();
-        Map<String, Object> result = new HashMap<>();
-        Map<String, Object> info = new HashMap<>();
-        String json = "";
-        int i = 0;
-        for (User item: items) {
-            info.put("id", item.getId());
-            info.put("openid", item.getOpenid());
-            info.put("username", item.getUsername());
-            info.put("userid", item.getUserid());
-            info.put("roles", item.getRoles());
-            info.put("dept", item.getDepartment());
-            if(0==i){
-                json = JSON.toJSONString(info);
-            }else{
-                json += ","+JSON.toJSONString(info);
-            }
-            i++;
-        }
-        result.put("data", "[" +json+ "]");
-        result.put("count", i);
-        return JSON.toJSONString(result);
+        return "user/paged";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String add(
-            @RequestParam(value="openid", required=true) String openid,
+            @RequestParam(value="openid", required=true) String openid,     //当字段名与名称相同时可以省略不写
             @RequestParam(value="username", defaultValue="") String username,
             @RequestParam(value="userid", defaultValue="") String userid,
             User user
@@ -97,13 +77,15 @@ public class UserController
     public String edit(@PathVariable int id, Model model, User user)
     {
         model.addAttribute("user", service.findOne(id));
+        model.addAttribute("depts", service.findAllDept());
+        model.addAttribute("roles", service.findAllRole());
         return "user/edit";
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String update(
             @RequestParam(value="id", required=true) long id,
-            @RequestParam(value="openid", required=true) String openid,
+            @RequestParam(value="openid", required=true) String openid,         //当字段名与名称相同时可以省略不写
             @RequestParam(value="username", defaultValue="") String username,
             @RequestParam(value="userid", defaultValue="") String userid,
             User user
@@ -113,12 +95,15 @@ public class UserController
         return "redirect:/user/";
     }
 
-    @ResponseBody
+    //@ResponseBody
     @RequestMapping(value = "/sql", method = RequestMethod.GET)
-    public String sql(@RequestParam(value="name", required=true) String name, User user)
+    public String sql(Model model)
     {
-        user = service.sql(user);
-        return user.getUsername();
+        model.addAttribute("items", service.findAllSql());
+        model.addAttribute("depts", service.findAllDept());
+        model.addAttribute("roles", service.findAllRole());
+
+        return "user/index";
     }
 
 }

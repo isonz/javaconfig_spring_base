@@ -5,7 +5,9 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -35,7 +37,8 @@ public class Role
 	private String code;
 
 	@Getter @Setter
-	@ManyToMany(targetEntity = User.class, mappedBy = "roles")
-	private List<User> users = new ArrayList<User>();
+	@ManyToMany(cascade = CascadeType.MERGE, fetch=FetchType.LAZY)
+	@JoinTable(name="user_role",joinColumns={@JoinColumn(name="roles_id",referencedColumnName="id")},inverseJoinColumns={@JoinColumn(name="users_id", referencedColumnName = "id")})
+	private Set<User> users = new HashSet<User>();
 
 }
