@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>cn.ptp</groupId>
-	<artifactId>init</artifactId>
+	<artifactId>MyBatis</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>init</name>
+	<name>MyBatis</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
@@ -54,6 +54,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-freemarker</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -64,6 +68,11 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<type>jar</type>
 			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.0.9</version>
 		</dependency>
 
 		<!-- Compiler -->
@@ -81,7 +90,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>INIT</finalName>
+		<finalName>MyBatis</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
