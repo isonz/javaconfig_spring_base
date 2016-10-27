@@ -1,11 +1,17 @@
 package cn.ptp;
 
+import cn.ptp.mapper.MessageMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
-public class AppStart {
+public class AppStart implements CommandLineRunner
+{
+	@Autowired
+	private MessageMapper messageMapper;
 
 	public static void main(String[] args)
 	{
@@ -19,4 +25,12 @@ public class AppStart {
 		}
 		*/
 	}
+
+	@Override
+	public void run(String... args) throws Exception
+	{
+		System.out.println(this.messageMapper.findByName("abc"));
+	}
+
+
 }

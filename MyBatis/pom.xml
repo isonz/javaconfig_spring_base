@@ -75,10 +75,6 @@
 			<artifactId>druid</artifactId>
 			<version>1.0.9</version>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-jdbc</artifactId>
-		</dependency>
 
 		<!-- Compiler -->
 		<dependency>
