@@ -2,15 +2,19 @@ package cn.ptp.controller;
 
 import cn.ptp.entity.Message;
 import cn.ptp.service.MessageService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.alibaba.fastjson.JSON;
+import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -26,21 +30,22 @@ public class MessageController
         model.addAttribute("items", service.findAllOrderByIdDesc());
         return "message/index";
     }
-/*
+
     @RequestMapping(value = "/paged", method = RequestMethod.GET)
     public String paged(@RequestParam(value="pageNum", defaultValue="1") int pageNum, @RequestParam(value="pageSize", defaultValue="20") int count, Model model)
     {
         int start = (pageNum - 1) * count;
-        Page<Message> page = service.paged(new PageRequest(start, count));
-        long total = page.getTotalElements();
-        int allpage = page.getTotalPages();
+        Page<Message> page = PageHelper.startPage(start, count);
+        long total = page.getTotal();
+        int allpage = page.getPages();
         Iterator<Message> items = page.iterator();
         model.addAttribute("items", items);
         model.addAttribute("total", total);
         model.addAttribute("allpage", allpage);
+
         return "message/paged";
     }
-
+    /*
     @RequestMapping(value = "/json", produces="application/json;charset=utf-8", method = RequestMethod.GET)
     @ResponseBody
     public String json(){
