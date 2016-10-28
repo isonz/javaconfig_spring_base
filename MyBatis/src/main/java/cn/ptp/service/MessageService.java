@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Service
 @Transactional
@@ -21,7 +23,14 @@ public class MessageService
         return message;
     }
 
+    public List<Message> findAll()
+    {
+        return messageMapper.findAll();
+    }
 
-
+    public List<Message> findAllOrderByIdDesc()
+    {
+        return messageMapper.findAllOrderByIdDesc();
+    }
 
 }

@@ -22,7 +22,8 @@ public class MessageController
 
     @RequestMapping("/")
     public String index(Model model) {
-        model.addAttribute("items", service.findOne(1));	//addAttribute不允许空值
+        //model.addAttribute("items", service.findAll());
+        model.addAttribute("items", service.findAllOrderByIdDesc());
         return "message/index";
     }
 /*

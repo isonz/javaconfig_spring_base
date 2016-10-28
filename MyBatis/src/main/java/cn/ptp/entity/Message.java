@@ -1,6 +1,7 @@
 package cn.ptp.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class Message {
     /**
@@ -258,4 +259,6 @@ public class Message {
     public void setMsg(String msg) {
         this.msg = msg == null ? null : msg.trim();
     }
+
+
 }

@@ -407,4 +407,13 @@
       ip = #{ip,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="findAll" resultType="cn.ptp.entity.Message" >
+    select * from message
+  </select>
+
+  <select id="findAllOrderByIdDesc" resultType="cn.ptp.entity.Message" >
+    select * from message ORDER By id DESC
+  </select>
+
 </mapper>
