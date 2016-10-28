@@ -120,6 +120,6 @@ public interface MessageMapper {
     int updateByPrimaryKey(Message record);
 
     @Select("select * from message where name = #{name}")
-    Message findByName(@Param("state") String name);
+    Message findByName(@Param("name") String name);
 
 }
