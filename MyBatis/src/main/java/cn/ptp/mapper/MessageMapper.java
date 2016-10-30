@@ -125,8 +125,8 @@ public interface MessageMapper {
     @Select("select * from message where name = #{name}")
     Message findByName(@Param("name") String name);
 
-    public List<Message> findAll();
+    List<Message> findAll();
 
-    public List<Message> findAllOrderByIdDesc();
+    List<Message> findAllOrderByIdDesc();
 
 }
