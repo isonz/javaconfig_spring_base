@@ -1,8 +1,10 @@
 package cn.ptp.mapper;
 
+import cn.ptp.Page;
 import cn.ptp.entity.Message;
 import cn.ptp.entity.MessageExample;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -129,4 +131,10 @@ public interface MessageMapper {
 
     List<Message> findAllOrderByIdDesc();
 
+    //--------- Paging
+    @Select("select * from message LIMIT #{start},#{count}")
+    List<Message> paging(@Param("start") int start, @Param("count") int count);
+    @Select("select COUNT(id) count from message")
+    double pageTotal();
+    //--------
 }

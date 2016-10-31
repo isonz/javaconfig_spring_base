@@ -2,6 +2,7 @@ package cn.ptp.controller;
 
 import cn.ptp.entity.Message;
 import cn.ptp.service.MessageService;
+import com.alibaba.fastjson.JSONArray;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -51,20 +52,17 @@ public class MessageController
         Map<String, Object> result = new HashMap<>();
         Map<String, Object> info = new HashMap<>();
         String json = "";
+        JSONArray jsonArray = new JSONArray();
         int i = 0;
         for (Message item: items) {
             info.put("id", item.getId());
             info.put("name", item.getName());
             info.put("msg", item.getMsg());
             info.put("create_at", item.getCreate_at());
-            if(0==i){
-                json = JSON.toJSONString(info);
-            }else{
-                json += ","+JSON.toJSONString(info);
-            }
+            jsonArray.add(JSON.toJSON(info));
             i++;
         }
-        result.put("data", "[" +json+ "]");
+        result.put("data",jsonArray);
         result.put("count", i);
         return JSON.toJSONString(result);
     }
