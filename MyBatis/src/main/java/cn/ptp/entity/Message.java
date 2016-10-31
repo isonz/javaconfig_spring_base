@@ -185,7 +185,9 @@ public class Message {
      * @mbggenerated Thu Oct 27 15:00:23 CST 2016
      */
     public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+        name = name == null ? null : name.trim();
+        if(name.length() > 20) name = name.substring(0,20);
+        this.name = name;
     }
 
     /**

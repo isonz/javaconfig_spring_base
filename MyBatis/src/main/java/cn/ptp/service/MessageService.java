@@ -6,6 +6,7 @@ import cn.ptp.mapper.MessageMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
@@ -13,7 +14,7 @@ import java.util.List;
 
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class MessageService
 {
@@ -57,6 +58,7 @@ public class MessageService
         return messageMapper.findByName(name);
     }
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Message save(Message message)
     {
         Assert.hasText(message.getMsg(), "Mst must not be empty!");
@@ -75,8 +77,11 @@ public class MessageService
         }catch (NullPointerException e){
             tmp = message;
         }
-        id = messageMapper.insert(tmp);     //插入的条数
-System.out.println(id);
+        id = messageMapper.insert(tmp);       //插入的条数
+
+        System.out.println(tmp.getId());      //获取插入的ID
+        messageMapper.deleteByPrimaryKey(id); //测试Transactional
+
         if(id > 0) return tmp;
         return null;
     }
@@ -89,7 +94,6 @@ System.out.println(id);
             return false;
         }
         int status = messageMapper.deleteByPrimaryKey(id);
-System.out.println(status);
         if(status>0) return true;
         return false;
     }

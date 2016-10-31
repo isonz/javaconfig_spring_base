@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
-Source Server Version : 50709
+Source Server Version : 50524
 Source Host           : localhost:3306
 Source Database       : myssh
 
 Target Server Type    : MYSQL
-Target Server Version : 50709
+Target Server Version : 50524
 File Encoding         : 65001
 
-Date: 2016-10-27 17:39:32
+Date: 2016-11-01 00:37:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -43,26 +43,30 @@ INSERT INTO `dept` VALUES ('5', '总经办', null);
 DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `create_at` int(10) unsigned DEFAULT NULL COMMENT '时间戳',
+  `create_at` int(10) unsigned DEFAULT '0' COMMENT '时间戳',
   `date` date DEFAULT NULL,
-  `days` float(10,2) DEFAULT NULL,
+  `days` float(10,2) DEFAULT '0.00',
   `msg` longtext,
   `name` varchar(20) NOT NULL,
   `update_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `ip` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of message
 -- ----------------------------
 INSERT INTO `message` VALUES ('37', '1472724499', '2016-09-01', '100.01', '发生发哈市地方', '哈哈', '2016-09-01 18:08:19', '127.0.0.1');
-INSERT INTO `message` VALUES ('84', '1482726919', '2016-09-01', '100.01', 'asdf', 'abc', '2016-09-01 18:48:39', '192.168.75.112');
+INSERT INTO `message` VALUES ('84', '1482726919', '2016-09-01', '100.01', 'asdf', 'ytybbbbbbbbbbfffffff', '2016-09-01 18:48:39', '192.168.75.112');
 INSERT INTO `message` VALUES ('90', '0', null, '0.00', '杭州起码科技有限公司杭州起码科技有限公司', '杭州起码科技有限公司', null, null);
 INSERT INTO `message` VALUES ('91', '0', null, '0.00', 'uuuuurrrrffff', '杭州起码fff', null, null);
 INSERT INTO `message` VALUES ('92', '0', null, '0.00', 'ff', 'uuuuu让人啊啊啊', null, null);
 INSERT INTO `message` VALUES ('95', '0', null, '0.00', 'fffffffffffffffff', 'サンヤ (三亜)を体験しよう!', '2016-10-25 22:55:13', null);
+INSERT INTO `message` VALUES ('99', '0', null, '0.00', 'asdfasdf', 'asdfasf', null, null);
+INSERT INTO `message` VALUES ('100', '0', null, '0.00', 'fffffffffffffffffffff', 'astt', null, null);
+INSERT INTO `message` VALUES ('101', '0', null, '0.00', 'dfgsdfgsdfgccccccccccc', 'bbbbcccccccccccccccc', null, null);
+INSERT INTO `message` VALUES ('102', '0', null, '0.00', 'asdfasdfasdf', 'asdfaasdfasdf', null, null);
 
 -- ----------------------------
 -- Table structure for role
@@ -96,7 +100,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   KEY `FK5rwmryny6jthaaxkogownknqp` (`dept_id`),
   CONSTRAINT `FK5rwmryny6jthaaxkogownknqp` FOREIGN KEY (`dept_id`) REFERENCES `dept` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
@@ -104,13 +108,14 @@ CREATE TABLE `user` (
 INSERT INTO `user` VALUES ('1', 'openid_ison', 'username_ison', 'userid_ison', '', '1');
 INSERT INTO `user` VALUES ('2', 'katie', '13632252275', 'katie', '', '1');
 INSERT INTO `user` VALUES ('3', '张三丰', '张三丰', '张无忌', '', '1');
+INSERT INTO `user` VALUES ('4', '张三丰', '张三丰不能重复', '张无忌', '', '3');
+INSERT INTO `user` VALUES ('5', '张三丰', '张三丰还是不能重复', '张无忌', '', '4');
 INSERT INTO `user` VALUES ('6', 'katie', '也是不能重复', 'katie', '', '2');
 INSERT INTO `user` VALUES ('7', 'katie', '什么？不可以？', 'katie顶顶顶顶顶', '', '3');
 INSERT INTO `user` VALUES ('12', 'misswu', 'misswu', 'misswu', '', '5');
 INSERT INTO `user` VALUES ('14', '张三丰', 'zxskigg', 'ison', '', '1');
 INSERT INTO `user` VALUES ('16', '张三丰', 'isonz@qq.com', '张无忌', '', '3');
 INSERT INTO `user` VALUES ('17', '是吗', '阿山的发生', '撒旦发', '', '2');
-INSERT INTO `user` VALUES ('18', '张三丰', 'tttttttt', 'ison', '', '2');
 
 -- ----------------------------
 -- Table structure for user_role
@@ -135,13 +140,13 @@ INSERT INTO `user_role` VALUES ('7', '2');
 INSERT INTO `user_role` VALUES ('7', '3');
 INSERT INTO `user_role` VALUES ('16', '1');
 INSERT INTO `user_role` VALUES ('16', '3');
+INSERT INTO `user_role` VALUES ('4', '2');
+INSERT INTO `user_role` VALUES ('5', '1');
+INSERT INTO `user_role` VALUES ('5', '2');
 INSERT INTO `user_role` VALUES ('6', '2');
 INSERT INTO `user_role` VALUES ('3', '1');
 INSERT INTO `user_role` VALUES ('2', '2');
 INSERT INTO `user_role` VALUES ('17', '1');
-INSERT INTO `user_role` VALUES ('18', '1');
-INSERT INTO `user_role` VALUES ('18', '2');
-INSERT INTO `user_role` VALUES ('18', '3');
 
 -- ----------------------------
 -- Table structure for user_roles1

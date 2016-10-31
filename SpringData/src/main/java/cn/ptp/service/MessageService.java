@@ -65,7 +65,11 @@ public class MessageService
 		}catch (NullPointerException e){
 			tmp = message;
 		}
-        return repository.save(tmp);
+        tmp = repository.save(tmp);
+
+		System.out.println(tmp.getId());		//插入的ID
+		//repository.delete(Long.valueOf(1));	//测试Transactional成功
+		return tmp;
 	}
 
 	public Optional findByName(String name)
