@@ -4,8 +4,10 @@ import cn.ptp.entity.Role;
 import cn.ptp.entity.RoleExample;
 import java.util.List;
 
+import cn.ptp.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface RoleMapper {
@@ -96,4 +98,24 @@ public interface RoleMapper {
      * @mbggenerated Thu Oct 27 15:00:23 CST 2016
      */
     int updateByPrimaryKey(Role record);
+
+    @Select("select * from role where name = #{name}")
+    Role findByName(@Param("name") String name);
+
+    List<Role> findAll();
+
+    List<Role> findAllOrderByIdDesc();
+
+    //--------- Paging
+    @Select("select * from role LIMIT #{start},#{count}")
+    List<Role> paging(@Param("start") int start, @Param("count") int count);
+    @Select("select COUNT(id) count from role")
+    double pageTotal();
+    //--------
+
+    @Select("SELECT u.* FROM user u, user_role ur, role r WHERE u.id=ur.users_id AND ur.roles_id=r.id AND r.id=#{id}")
+    List<User> selectRoleUser(long id);
+
+    @Select("SELECT * FROM role WHERE id in (#{ids})")
+    List<Role> selectInIds(String ids);
 }

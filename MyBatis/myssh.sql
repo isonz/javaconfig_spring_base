@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50709
 File Encoding         : 65001
 
-Date: 2016-10-27 17:39:43
+Date: 2016-11-01 16:16:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -43,9 +43,9 @@ INSERT INTO `dept` VALUES ('5', '总经办', null);
 DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `create_at` int(10) unsigned DEFAULT NULL COMMENT '时间戳',
+  `create_at` int(10) unsigned DEFAULT '0' COMMENT '时间戳',
   `date` date DEFAULT NULL,
-  `days` float(10,2) DEFAULT NULL,
+  `days` float(10,2) DEFAULT '0.00',
   `msg` longtext,
   `name` varchar(20) NOT NULL,
   `update_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -91,12 +91,12 @@ CREATE TABLE `user` (
   `openid` varchar(30) DEFAULT NULL COMMENT '微信OPENID',
   `username` varchar(20) DEFAULT NULL,
   `userid` varchar(20) DEFAULT NULL COMMENT '微信企业号里的userid',
-  `valid` bit(1) DEFAULT NULL COMMENT '用户是否有效T,F',
+  `valid` bit(1) DEFAULT b'1' COMMENT '用户是否有效T,F',
   `dept_id` int(10) unsigned DEFAULT NULL COMMENT '部门ID，外键',
   PRIMARY KEY (`id`),
   KEY `FK5rwmryny6jthaaxkogownknqp` (`dept_id`),
   CONSTRAINT `FK5rwmryny6jthaaxkogownknqp` FOREIGN KEY (`dept_id`) REFERENCES `dept` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
@@ -110,7 +110,8 @@ INSERT INTO `user` VALUES ('12', 'misswu', 'misswu', 'misswu', '', '5');
 INSERT INTO `user` VALUES ('14', '张三丰', 'zxskigg', 'ison', '', '1');
 INSERT INTO `user` VALUES ('16', '张三丰', 'isonz@qq.com', '张无忌', '', '3');
 INSERT INTO `user` VALUES ('17', '是吗', '阿山的发生', '撒旦发', '', '2');
-INSERT INTO `user` VALUES ('18', '张三丰', 'tttttttt', 'ison', '', '2');
+INSERT INTO `user` VALUES ('23', 'misswu', '13632252275fff', 'ison', '', '3');
+INSERT INTO `user` VALUES ('24', 'misswucccccccc', 'ccccccccccccccc', 'cccccccccccccc', '', '4');
 
 -- ----------------------------
 -- Table structure for user_role
@@ -121,8 +122,8 @@ CREATE TABLE `user_role` (
   `roles_id` int(10) unsigned NOT NULL,
   KEY `FKeog8p06nu33ihk13roqnrp1y6` (`roles_id`),
   KEY `FKip2yfnw7nx55paaa4i18j7moj` (`users_id`),
-  CONSTRAINT `FKeog8p06nu33ihk13roqnrp1y6` FOREIGN KEY (`roles_id`) REFERENCES `role` (`id`),
-  CONSTRAINT `FKip2yfnw7nx55paaa4i18j7moj` FOREIGN KEY (`users_id`) REFERENCES `user` (`id`)
+  CONSTRAINT `FKeog8p06nu33ihk13roqnrp1y6` FOREIGN KEY (`roles_id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `FKip2yfnw7nx55paaa4i18j7moj` FOREIGN KEY (`users_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -139,24 +140,3 @@ INSERT INTO `user_role` VALUES ('6', '2');
 INSERT INTO `user_role` VALUES ('3', '1');
 INSERT INTO `user_role` VALUES ('2', '2');
 INSERT INTO `user_role` VALUES ('17', '1');
-INSERT INTO `user_role` VALUES ('18', '1');
-INSERT INTO `user_role` VALUES ('18', '2');
-INSERT INTO `user_role` VALUES ('18', '3');
-
--- ----------------------------
--- Table structure for user_roles1
--- ----------------------------
-DROP TABLE IF EXISTS `user_roles1`;
-CREATE TABLE `user_roles1` (
-  `users1_id` int(10) unsigned NOT NULL,
-  `roles1_id` int(10) unsigned NOT NULL,
-  KEY `FKeog8p06nu33ihk13roqnrp1y6` (`roles1_id`),
-  KEY `FKip2yfnw7nx55paaa4i18j7moj` (`users1_id`),
-  CONSTRAINT `user_roles1_ibfk_1` FOREIGN KEY (`roles1_id`) REFERENCES `role` (`id`),
-  CONSTRAINT `user_roles1_ibfk_2` FOREIGN KEY (`users1_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of user_roles1
--- ----------------------------
-INSERT INTO `user_roles1` VALUES ('1', '1');

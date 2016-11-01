@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface DeptMapper {
@@ -96,4 +97,18 @@ public interface DeptMapper {
      * @mbggenerated Thu Oct 27 15:00:23 CST 2016
      */
     int updateByPrimaryKey(Dept record);
+
+    @Select("select * from dept where name = #{name}")
+    Dept findByName(@Param("name") String name);
+
+    List<Dept> findAll();
+
+    List<Dept> findAllOrderByIdDesc();
+
+    //--------- Paging
+    @Select("select * from dept LIMIT #{start},#{count}")
+    List<Dept> paging(@Param("start") int start, @Param("count") int count);
+    @Select("select COUNT(id) count from dept")
+    double pageTotal();
+    //--------
 }

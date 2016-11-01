@@ -1,11 +1,15 @@
 package cn.ptp.mapper;
 
+import cn.ptp.entity.Dept;
+import cn.ptp.entity.Role;
 import cn.ptp.entity.User;
 import cn.ptp.entity.UserExample;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface UserMapper {
@@ -96,4 +100,28 @@ public interface UserMapper {
      * @mbggenerated Thu Oct 27 15:00:23 CST 2016
      */
     int updateByPrimaryKey(User record);
+
+    @Select("select * from user where username = #{username}")
+    User findByUsername(@Param("username") String username);
+
+    List<User> findAll();
+
+    List<User> findAllOrderByIdDesc();
+
+    //--------- Paging
+    @Select("select * from user LIMIT #{start},#{count}")
+    List<User> paging(@Param("start") int start, @Param("count") int count);
+    @Select("select COUNT(id) count from user")
+    double pageTotal();
+    //--------
+
+    @Select("SELECT r.* FROM user u, user_role ur, role r WHERE u.id=ur.users_id AND ur.roles_id=r.id AND u.id=#{id}")
+    List<Role> selectUserRole(long id);
+
+    int insertUserRole(Map<String, Object> map);
+
+    int deleteUserRole(long users_id, long roles_id);
+
+    int deleteUserRoleByUser(long users_id);
+
 }

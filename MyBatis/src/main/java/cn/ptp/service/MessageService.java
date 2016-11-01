@@ -58,34 +58,31 @@ public class MessageService
         return messageMapper.findByName(name);
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     public Message save(Message message)
     {
         Assert.hasText(message.getMsg(), "Mst must not be empty!");
         Message mesg = findByName(message.getName());
-        if(null != mesg && !mesg.equals(message)){
+        if(null != mesg && mesg.getId() != message.getId()){
             throw new IllegalArgumentException("Name 重复!");
         }
 
-        Message tmp;
         int id;
         try {
             id = message.getId();
-            tmp = findOne(id);	    //防止没更新的字段变空
-            tmp.setName(message.getName());
-            tmp.setMsg(message.getMsg());
+            messageMapper.updateByPrimaryKeySelective(message);
         }catch (NullPointerException e){
-            tmp = message;
+            id = messageMapper.insert(message);       //插入的条数
         }
-        id = messageMapper.insert(tmp);       //插入的条数
 
-        System.out.println(tmp.getId());      //获取插入的ID
-        messageMapper.deleteByPrimaryKey(id); //测试Transactional
+        System.out.println(message.getId());      //获取插入的ID
+        //messageMapper.deleteByPrimaryKey(id); //测试Transactional
 
-        if(id > 0) return tmp;
+        if(id > 0) return message;
         return null;
     }
 
+    @Transactional(readOnly = false)
     public boolean delete(int id)
     {
         Message mess = messageMapper.selectByPrimaryKey(id);

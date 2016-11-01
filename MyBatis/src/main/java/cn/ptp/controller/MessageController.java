@@ -83,14 +83,13 @@ public class MessageController
         return "redirect:/message/";
     }
 
-
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String delete(@PathVariable int id, Message message)
     {
         boolean status = service.delete(id);
         return "redirect:/message/";
     }
-    /*
+
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable int id, Model model, Message message)
     {
@@ -110,13 +109,5 @@ public class MessageController
         return "redirect:/message/";
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/sql", method = RequestMethod.GET)
-    public String sql(@RequestParam(value="name", required=true) String name, Message message)
-    {
-        //message = service.sql(message);
-        return message.getMsg();
-    }
-*/
 
 }

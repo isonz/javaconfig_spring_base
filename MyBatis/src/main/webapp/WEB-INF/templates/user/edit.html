@@ -19,7 +19,7 @@
   <tr>
     <td>部门</td>
     <td class="left">
-      <select class="input select" name="department" id="department">
+      <select class="input select" name="dept_id" id="dept_id">
         <#list depts as dept>
           <option value="${dept.id}" <#if dept.id == user.department.id>  selected="selected"</#if>>${dept.name}</option>
         </#list>
@@ -34,7 +34,7 @@
         <#list user.roles as urole>
           <#if role.id == urole.id><#assign check=" checked='checked'" /></#if>
         </#list>
-        <input type="checkbox" ${check} class="checkbox" name="roles" id="roles" value="${role.id}" />${role.name}&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="checkbox" ${check} class="checkbox" name="roles_id" id="roles_id" value="${role.id}" />${role.name}&nbsp;&nbsp;&nbsp;&nbsp;
       </#list>
     </td>
   </tr>
