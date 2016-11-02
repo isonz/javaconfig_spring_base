@@ -108,16 +108,14 @@
 
 	<repositories>
 		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/libs-milestone</url>
-			<snapshots><enabled>false</enabled></snapshots>
+			<id>spring-milestone</id>
+			<url>https://repo.spring.io/libs-release</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
-			<id>spring-milestones</id>
-			<url>https://repo.spring.io/libs-milestone</url>
+			<id>spring-milestone</id>
+			<url>https://repo.spring.io/libs-release</url>
 		</pluginRepository>
 	</pluginRepositories>
 
