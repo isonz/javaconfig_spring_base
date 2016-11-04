@@ -1,49 +1,39 @@
 package cn.ptp;
 
-import cn.ptp.entity.Message;
-import cn.ptp.repository.MessageRepository;
+import cn.ptp.controller.MessageController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockServletContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.context.WebApplicationContext;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.hamcrest.Matchers.equalTo;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = MockServletContext.class)
 public class MessageTests
 {
-	private Message message;
-    private MessageRepository messageRepository;
-
-    private WebApplicationContext context;
-    private MockMvc mockMvc;
-    private RestTemplate restTemplate;
-
-    private int port=8080;
+    private MockMvc mvc;
 
     @Before
-    public void setupMockMvc() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+    public void setUp() {
+        mvc = MockMvcBuilders.standaloneSetup(new MessageController()).build();
     }
 
 	@Test
-	public void contextLoads()
+	public void getIndex() throws Exception
 	{
-        assertEquals(1, messageRepository.count());
+        mvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.TEXT_HTML))
+                .andExpect(status().isOk());
 	}
 
-    @Test
-    public void webappBookIsbnApi() {
-        Message message = restTemplate.getForObject("http://localhost:" + port +"/books/9876-5432-1111", Message.class);
-        assertNotNull(message);
-        assertEquals("中文测试", message.getName());
-    }
+
 
 }
