@@ -1,4 +1,4 @@
-package cn.ptp.message;
+package cn.ptp.test_message;
 
 import cn.ptp.controller.MessageController;
 import cn.ptp.entity.Message;
@@ -7,22 +7,17 @@ import cn.ptp.service.MessageService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.intThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -33,10 +28,10 @@ public class MessageTests
     private MockMvc mvc;
 
     @MockBean
-    private MessageService messageService;
+    private MessageService service;
 
     @MockBean
-    private MessageRepository messageRepository;
+    private MessageRepository repository;
 
 
     @Test
@@ -51,8 +46,8 @@ public class MessageTests
 
     @Test
     public void serPaged() throws Exception{
-        this.messageService = new MessageService(messageRepository);
-        Page<Message> page =this.messageService.paged(new PageRequest(0, 20));
+        this.service = new MessageService(repository);
+        Page<Message> page =this.service.paged(new PageRequest(0, 20));
         given(page.getTotalElements()).willReturn(anyLong());
     }
 
