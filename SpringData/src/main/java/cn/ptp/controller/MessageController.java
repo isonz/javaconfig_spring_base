@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,19 +30,39 @@ public class MessageController
         return "message/index";
     }
 
+    /**
+     * page	Page you want to retrieve.
+     * size	Size of the page you want to retrieve.
+     * sort	Properties that should be sorted by in the format property,property(,ASC|DESC). Default sort direction is ascending. Use multiple sort parameters if you want to switch directions, e.g. ?sort=firstname&sort=lastname,asc.
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/paged", method = RequestMethod.GET)
-    public String paged(@RequestParam(value="pageNum", defaultValue="1") int pageNum, @RequestParam(value="pageSize", defaultValue="20") int count, Model model)
-    {
+    public String paged(
+            @RequestParam(value="page", defaultValue="1") int page,
+            @RequestParam(value="size", defaultValue="20") int size,
+            //@RequestParam(value="sort", defaultValue="id,ASC") String sort,
+            //Pageable pageable,
+            Model model
+    ){
+        if(page<1) page=1;
+        page = page-1;
+        Pageable pageable = new PageRequest(page, size);
 
-        int start = (pageNum - 1) * count;
-        Page<Message> page = service.paged(new PageRequest(start, count));
-        long total = page.getTotalElements();
-        int allpage = page.getTotalPages();
-        Iterator<Message> items = page.iterator();
+        Page<Message> paged = service.paged(pageable);
+        long total = paged.getTotalElements();
+        int allpage = paged.getTotalPages();
+
+        Iterator<Message> items = paged.iterator();
+        //while (items.hasNext()) System.out.println(items.next().getName());
+        //System.out.println(page.hasNext());
+
         model.addAttribute("items", items);
         model.addAttribute("total", total);
         model.addAttribute("allpage", allpage);
 
+        model.addAttribute("page", page+1);
+        model.addAttribute("size", size);
         return "message/paged";
     }
 

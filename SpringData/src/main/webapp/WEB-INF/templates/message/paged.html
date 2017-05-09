@@ -19,7 +19,9 @@
                 </tr>
                 <#if (k>1)> <#assign k=1 /> <#else> <#assign k=k+1 /> </#if>
             </#list>
-            <tr><td colspan="11">总记录数：${total}，总页数：${allpage}</td></tr>
+            <tr><td colspan="11">
+                <#include "paging.html">
+            </td></tr>
         </table>
 
         <form id="form1" name="form1" method="post" action="/message/add">
