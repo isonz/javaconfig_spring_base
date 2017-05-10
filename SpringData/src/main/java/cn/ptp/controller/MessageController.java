@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.alibaba.fastjson.JSON;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -43,6 +44,7 @@ public class MessageController
             @RequestParam(value="size", defaultValue="20") int size,
             //@RequestParam(value="sort", defaultValue="id,ASC") String sort,
             //Pageable pageable,
+            HttpServletRequest request,
             Model model
     ){
         if(page<1) page=1;
@@ -51,19 +53,39 @@ public class MessageController
 
         Page<Message> paged = service.paged(pageable);
         long total = paged.getTotalElements();
-        int allpage = paged.getTotalPages();
+        int total_page = paged.getTotalPages();
 
         Iterator<Message> items = paged.iterator();
         //while (items.hasNext()) System.out.println(items.next().getName());
         //System.out.println(page.hasNext());
 
         model.addAttribute("items", items);
-        model.addAttribute("total", total);
-        model.addAttribute("allpage", allpage);
 
+        model.addAttribute("total", total);
+        model.addAttribute("total_page", total_page);
         model.addAttribute("page", page+1);
         model.addAttribute("size", size);
+        String currentUrl = request.getRequestURL().toString() + "?";
+        if(null != request.getQueryString()){
+            String[] params = {"page","size"};
+            String remvoed = removeParams(request.getQueryString(),params);
+            if(!remvoed.equals("")) currentUrl += remvoed+"&";
+        }
+        model.addAttribute("currentUrl", currentUrl);
+
         return "message/paged";
+    }
+
+    private String removeParams(String url, String[] params) {
+        String reg = null;
+        for (int i = 0; i < params.length; i++) {
+            reg = "(?<=[\\?&])" + params[i] + "=[^&]*&?";       //(?<=something1)something2  ,表示匹配something2 ,但这个something2 有个前提就是它的前面（不是前部）有个something1 比如 abcbc 用(?<=a)bc 只能匹配第一个 bc 而不能匹配第二个bc
+            url = url.replaceAll(reg, "");
+        }
+        reg = "page=[^&]*&?";
+        url = url.replaceAll(reg, "");
+        url = url.replaceAll("&+$", "");
+        return url;
     }
 
     @RequestMapping(value = "/json", produces="application/json;charset=utf-8", method = RequestMethod.GET)

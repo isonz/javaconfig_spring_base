@@ -1,7 +1,100 @@
-总记录数：${total}，总页数：${allpage}，
+<style>
+#paged{margin:30px 0; text-align:center;}#paged ul{margin:10px auto; text-align:center;}
+#paged ul li{margin:10px; height:42px; width:42px; display:inline-block; float:none;}
+#paged ul li a{display:block; line-height:40px; border: 1px #ccc solid;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;}
+#paged ul li a:hover,#paged ul li a.active{background:#4ba746; color:#FFF;}
+</style>
+
+<div id="paged">
+总记录数：${total}，总页数：${total_page}，
 当前第 ${page} 页，每页 ${size} 条记录
 
+<#assign shownum=9 />
 <#assign prev_page=page - 1 />
 <#assign next_page=page + 1 />
-${prev_page}
-${next_page}
+
+<#if prev_page lt 1> <#assign prev_page=1 /> </#if>
+<#if next gt total_page> <#assign next_page=total_page /> </#if>
+<#if total_page lt 1> <#assign total_page=1 /> </#if>
+<#if page lt 1> <#assign page=1 /></#if>
+<#if page gt total_page> <#assign page=total_page /> </#if>
+<#if size lt 1> <#assign size=1 /></#if>
+<#if shownum gt total_page> <#assign shownum=total_page /></#if>
+
+<ul class="clearfix">
+	<#if total_page lte shownum>
+		<#list 1..shownum as i>
+			<li>
+			<#if page == i>
+				<a href="${currentUrl}page=${i}&size=${size}" class="active">${i}</a>
+			<#else>
+				<a href="${currentUrl}page=${i}&size=${size}">${i}</a>
+			</#if>
+			</li>
+		</#list>
+	<#elseif ((page lte (shownum/2)?ceiling)) && (total_page gt shownum)>
+		<#list 1..shownum as i>
+			<li>
+			<#if page == i>
+				<a href="${currentUrl}page=${i}&size=${size}" class="active">${i}</a>
+			<#else>
+				<a href="${currentUrl}page=${i}&size=${size}">${i}</a>
+			</#if>
+			</li>
+		</#list>
+		<li><a href="${currentUrl}page=${page+1}&size=${size}"> >> </a></li>
+		<li>
+		<#if page == total_page>
+			<a href="${currentUrl}page=${total_page}&size=${size}" class="active">${total_page}</a>
+		<#else>
+			<a href="${currentUrl}page=${total_page}&size=${size}">${total_page}</a>
+		</#if>
+		</li>
+	<#elseif (page gt (shownum/2)?ceiling) && (page lt (total_page-(shownum/2)?ceiling)?ceiling) && (total_page gt shownum)>
+		<li>
+		<#if page == i>
+			<a href="${currentUrl}page=1&size=${size}" class="active">1</a>
+		<#else>
+			<a href="${currentUrl}page=1&size=${size}">1</a>
+		</#if>
+		</li>
+		<li><a href="${currentUrl}page=${page-1}&size=${size}"> << </a></li>
+		<#list (page-(shownum/2)?floor)..(page+(shownum/2)?floor) as i>
+			<li>
+			<#if page == i>
+				<a href="${currentUrl}page=${i}&size=${size}" class="active">${i}</a>
+			<#else>
+				<a href="${currentUrl}page=${i}&size=${size}">${i}</a>
+			</#if>
+			</li>
+		</#list>
+		<li><a href="${currentUrl}page=${page+1}&size=${size}"> >> </a></li>
+		<li>
+		<#if page == i>
+			<a href="${currentUrl}page=${total_page}&size=${size}" class="active">${total_page}</a>
+		<#else>
+			<a href="${currentUrl}page=${total_page}&size=${size}">${total_page}</a>
+		</#if>
+		</li>
+	<#elseif ((page+(shownum/2)?ceiling) gte total_page) && (total_page gt shownum)>
+		<li>
+		<#if page == i>
+			<a href="${currentUrl}page=1&size=${size}" class="active">1</a>
+		<#else>
+			<a href="${currentUrl}page=1&size=${size}">1</a>
+		</#if>
+		</li>
+		<li><a href="${currentUrl}page=${page-1}&size=${page_size}"> << </a></li>
+		<#list (page-(shownum/2)?floor)..total_page as i>
+			<li>
+			<#if page == i>
+				<a href="${currentUrl}page=${i}&size=${size}" class="active">${i}</a>
+			<#else>
+				<a href="${currentUrl}page=${i}&size=${size}">${i}</a>
+			</#if>
+			</li>
+		</#list>
+	</#if>
+</ul>
+
+</div>
