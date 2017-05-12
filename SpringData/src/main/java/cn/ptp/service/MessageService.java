@@ -48,20 +48,21 @@ public class MessageService
 
 	public Message save(Message message)
     {
-		Assert.hasText(message.getMsg(), "Mst must not be empty!");
 
+		Assert.hasText(message.getMsg(), "Mst must not be empty!");
 		findByName(message.getName()).ifPresent(mesg -> {
 			if(!mesg.equals(message)){
 				throw new IllegalArgumentException("Name 重复!");
 			}
 		});
 
-		Message tmp;
+		Message tmp = null;
 		try {
 			long id = message.getId();
-			tmp = findOne(id);	    //防止没更新的字段变空
-			tmp.setName(message.getName());
-			tmp.setMsg(message.getMsg());
+			if(id>0) {
+				tmp = findOne(id);
+
+			}
 		}catch (NullPointerException e){
 			tmp = message;
 		}
@@ -70,6 +71,7 @@ public class MessageService
 		System.out.println(tmp.getId());		//插入的ID
 		//repository.delete(Long.valueOf(1));	//测试Transactional成功
 		return tmp;
+
 	}
 
 	public Optional findByName(String name)

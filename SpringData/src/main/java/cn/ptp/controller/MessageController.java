@@ -75,7 +75,7 @@ public class MessageController extends BaseController
             info.put("id", item.getId());
             info.put("name", item.getName());
             info.put("msg", item.getMsg());
-            info.put("create_at", item.getCreate_at());
+            info.put("create_at", item.getCreateAt());
             jsonArray.add(JSON.toJSON(info));
             i++;
         }
@@ -106,18 +106,25 @@ public class MessageController extends BaseController
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable int id, Model model, Message message)
     {
-        model.addAttribute("message", service.findOne(id));
+        message = service.findOne(id);
+        model.addAttribute("message", message);
+
+        System.out.println(message.getCreateAt());
+        System.out.println(message.getUpdateAt());
+
         return "message/edit";
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String update(
-            @RequestParam(value="id", required=true) long id,
-            @RequestParam(value="name", required=true) String name,
-            @RequestParam(value="msg", defaultValue="") String msg,
+            //@RequestParam(value="id", required=true) long id,
+            //@RequestParam(value="name", required=true) String name,
+            //@RequestParam(value="msg", defaultValue="") String msg,
             Message message
     )
     {
+        System.out.println(message.getCreateAt());
+        System.out.println(message.getUpdateAt());
         service.save(message);
         return "redirect:/message/";
     }
