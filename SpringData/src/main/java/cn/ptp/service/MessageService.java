@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 
 import cn.ptp.entity.Message;
 import cn.ptp.repository.MessageRepository;
+import cn.ptp.utils.zlib.ObjFunc;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,20 +49,24 @@ public class MessageService
 
 	public Message save(Message message)
     {
+    	/*
 		Assert.hasText(message.getMsg(), "Mst must not be empty!");
-
 		findByName(message.getName()).ifPresent(mesg -> {
 			if(!mesg.equals(message)){
 				throw new IllegalArgumentException("Name 重复!");
 			}
 		});
+		*/
 
-		Message tmp;
+		Message tmp = null;
 		try {
 			long id = message.getId();
-			tmp = findOne(id);	    //防止没更新的字段变空
-			tmp.setName(message.getName());
-			tmp.setMsg(message.getMsg());
+			if(id>0) {
+				tmp = findOne(id);        //防止没更新的字段变空
+				tmp = (Message) ObjFunc.updateObj(message, tmp);
+			}else{
+				tmp = message;
+			}
 		}catch (NullPointerException e){
 			tmp = message;
 		}
